@@ -1,0 +1,481 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb);
+    background-size: 400% 400%;
+    animation: gradientBG 10s ease infinite;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow-x: hidden;
+    padding: 20px 0;
+    color: #333;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.background-animation {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.floating-item {
+    position: absolute;
+    bottom: -50px;
+    font-size: 1.8rem;
+    animation: floatUp 8s linear infinite;
+    opacity: 0.7;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+}
+
+.music-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 100;
+    transition: transform 0.2s;
+}
+
+.music-toggle:hover {
+    transform: scale(1.1);
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    padding: 28px 20px;
+    border-radius: 25px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    max-width: 92%;
+    width: 430px;
+    z-index: 10;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.shake {
+    animation: shakeAnim 0.4s ease-in-out;
+}
+
+@keyframes shakeAnim {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-10px); }
+    40%, 80% { transform: translateX(10px); }
+}
+
+/* Polaroid Photo Frame */
+.polaroid-frame {
+    background: white;
+    padding: 10px 10px 16px 10px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    transform: rotate(-3deg);
+    margin: 0 auto 18px auto;
+    width: 190px;
+    transition: transform 0.3s ease;
+}
+
+.polaroid-frame:hover {
+    transform: rotate(0deg) scale(1.05);
+}
+
+.polaroid-img-wrapper {
+    width: 100%;
+    height: 140px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #f0f0f0;
+}
+
+/* Polaroid Image Styling Fix */
+.polaroid-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* 👈 Isse poori photo dikhegi, cut nahi hogi */
+    background-color: #f0f0f0; /* Side me khali jagah ko clean look dene ke liye */
+    border-radius: 8px;
+}
+
+
+.polaroid-caption {
+    font-family: 'Fredoka One', cursive;
+    font-size: 0.85rem;
+    color: #ff6b6b;
+    margin-top: 8px;
+}
+
+.badge {
+    display: inline-block;
+    background: #ff6b6b;
+    color: #fff;
+    padding: 5px 15px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.gift-badge {
+    background: linear-gradient(45deg, #11998e, #38ef7d);
+}
+
+h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.9rem;
+    color: #2d3436;
+    margin-bottom: 8px;
+}
+
+p {
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: #636e72;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 14px 20px;
+    margin: 15px 0 10px 0;
+    border: 2px solid #ff9a9e;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.error-text {
+    color: #d63031;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.btn {
+    background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-family: 'Fredoka One', cursive;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+    transition: all 0.3s ease;
+    width: 100%;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.gift-claim-btn {
+    background: linear-gradient(45deg, #8e2de2, #4a00e0);
+    box-shadow: 0 5px 15px rgba(142, 45, 226, 0.4);
+    font-size: 1.05rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    color: #ff6b6b;
+    line-height: 1.2;
+    margin-bottom: 15px;
+}
+
+.name-highlight {
+    background: linear-gradient(45deg, #d63031, #e84393);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: capitalize;
+}
+
+/* Friendship Meter */
+.meter-container {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px 15px;
+    border-radius: 15px;
+    margin-bottom: 18px;
+}
+
+.meter-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #2d3436;
+    margin-bottom: 6px;
+}
+
+.meter-bar {
+    width: 100%;
+    height: 12px;
+    background: #dfe6e9;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.meter-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff6b6b, #ff8e53);
+    border-radius: 10px;
+    transition: width 1.5s cubic-bezier(0.1, 0.5, 0.5, 1);
+}
+
+/* Secret Gift Boxes Grid */
+.gifts-heading {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #ff6b6b;
+    margin: 18px 0 10px 0;
+    text-transform: uppercase;
+}
+
+.gift-boxes-grid {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.gift-box {
+    flex: 1;
+    background: #fff;
+    border: 2px dashed #ff9a9e;
+    padding: 10px 5px;
+    border-radius: 12px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #2d3436;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.gift-box:hover {
+    background: #fff0f3;
+    transform: scale(1.05);
+    border-color: #ff6b6b;
+}
+
+.gift-box.opened {
+    background: #ff6b6b;
+    color: white;
+    border-style: solid;
+    font-size: 0.75rem;
+}
+
+/* Quote Box */
+.quote-box {
+    background: rgba(255, 255, 255, 0.75);
+    border-left: 4px solid #ff6b6b;
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.quote-box p {
+    font-style: italic;
+    font-weight: 600;
+    color: #2d3436;
+    font-size: 0.88rem;
+    margin-bottom: 6px;
+}
+
+.sub-btn {
+    background: transparent;
+    border: none;
+    color: #ff6b6b;
+    font-weight: 700;
+    font-size: 0.8rem;
+    cursor: pointer;
+    text-decoration: underline;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.replay-btn {
+    font-size: 0.9rem;
+    padding: 10px;
+    background: #dfe6e9;
+    color: #2d3436;
+    box-shadow: none;
+}
+
+.share-btn {
+    background: linear-gradient(45deg, #25D366, #128C7E);
+    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+    font-size: 0.95rem;
+}
+
+/* PAGE 3: Delivery Tracking Styles */
+.delivery-sub {
+    font-size: 0.85rem;
+    margin-bottom: 18px;
+}
+
+.ring-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.ring-icon {
+    font-size: 2.8rem;
+    background: #fff0f3;
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.ring-details h3 {
+    font-size: 1.05rem;
+    color: #2d3436;
+}
+
+.ring-details p {
+    font-size: 0.8rem;
+}
+
+.status-pill {
+    display: inline-block;
+    background: #e17055;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 10px;
+    margin-top: 5px;
+}
+
+/* Timeline */
+.tracking-timeline {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.tracking-timeline::before {
+    content: '';
+    position: absolute;
+    left: 14px;
+    top: 10px;
+    bottom: 10px;
+    width: 3px;
+    background: #dfe6e9;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.step-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #dfe6e9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    z-index: 2;
+    color: #636e72;
+}
+
+.step.completed .step-icon {
+    background: #00b894;
+    color: white;
+}
+
+.step.active .step-icon {
+    background: #ff6b6b;
+    color: white;
+}
+
+.step-text strong {
+    display: block;
+    font-size: 0.88rem;
+    color: #2d3436;
+}
+
+.step-text small {
+    font-size: 0.75rem;
+    color: #b2bec3;
+}
+
+.tracking-id-box {
+    background: rgba(0, 0, 0, 0.04);
+    padding: 8px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+}
+
+/* Tap Burst Effect */
+.tap-particle {
+    position: fixed;
+    pointer-events: none;
+    font-size: 1.5rem;
+    animation: burstOut 0.8s ease-out forwards;
+    z-index: 1000;
+}
+
+@keyframes burstOut {
+    0% { transform: scale(0.3) translateY(0); opacity: 1; }
+    100% { transform: scale(1.5) translateY(-40px); opacity: 0; }
+}
+
+.main-msg{white-space:pre-line}

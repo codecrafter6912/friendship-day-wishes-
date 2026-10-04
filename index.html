@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secret Friendship Surprise 🔒</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- 🎵 BACKGROUND AUDIO TAG (SAVI KAHLON - MERA YAAR) -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="song.mp3" type="audio/mpeg">
+        <source src="./song.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div class="background-animation" id="bg-animation"></div>
+
+    <!-- Music Toggle Button -->
+    <button id="music-btn" class="music-toggle" title="Toggle Sound">🎵</button>
+
+    <div class="card" id="main-card">
+        
+        <!-- PAGE 1: Secret Nickname Access -->
+        <div id="input-section">
+            <div class="badge">🔒 PERSONALIZED ACCESS</div>
+            <h2>Pehchan Kaun? 🧐</h2>
+            <p>Apna secret nickname dalo jo sirf hum dono ko pata hai:</p>
+            
+            <input type="text" id="user-nickname" placeholder="Enter your nickname..." autocomplete="off">
+            <p id="error-msg" class="error-text hidden">❌ Galat Nickname! Lagta hai tum mere dost nahi ho! 😜</p>
+
+            <button class="btn" id="start-btn">Unlock My Surprise 🔑</button>
+            <a class="sub-btn" href="create.html" style="display:block;margin-top:14px">Make your own for a friend 🎁</a>
+        </div>
+
+        <!-- PAGE 2: Memory & Photo Surprise -->
+        <div id="surprise-section" class="hidden">
+            <!-- Polaroid Photo Frame -->
+            <div class="polaroid-frame">
+                <div class="polaroid-img-wrapper">
+                    <!-- Local Friend Photo Added Here -->
+                    <img id="friend-photo" src="friend-photo.jpeg" alt="Friendship Day Special Photo">
+                </div>
+                <div class="polaroid-caption" id="photo-caption">Best Friends Forever ❤️</div>
+            </div>
+
+            <h1 id="greeting"></h1>
+            
+            <!-- Animated Friendship Meter -->
+            <div class="meter-container">
+                <div class="meter-label">
+                    <span>Friendship Compatibility</span>
+                    <span id="meter-percent">1000% 🔥</span>
+                </div>
+                <div class="meter-bar">
+                    <div class="meter-fill" id="meter-fill"></div>
+                </div>
+            </div>
+
+            <p id="special-message" class="main-msg"></p>
+
+            <!-- Interactive Secret Gift Boxes -->
+            <div class="gifts-heading">Tap boxes to unlock secret notes! 🎁</div>
+            <div class="gift-boxes-grid">
+                <div class="gift-box" data-note="Secret Memory 🤫Secret Memory Secret rhegi yha thodi na btaunga: ">🎁 Box 1</div>
+                <div class="gift-box" data-note="Best Quality ⭐: Humesha har problem me sath khada rehna!">🎁 Box 2</div>
+                <div class="gift-box" data-note="Official Tag 🏷️: Certified Lifetime Partner-in-Crime!">🎁 Box 3</div>
+            </div>
+
+            <!-- Dynamic Quote Section -->
+            <div class="quote-box">
+                <p id="quote-text">"Friends standard nahi, stand lene wale hone chahiye!" 😎</p>
+                <button id="next-quote-btn" class="sub-btn">Tap for another note 💌</button>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="button-group">
+                <button class="btn replay-btn" id="replay-confetti-btn">Blast Confetti 🎊</button>
+                <button class="btn gift-claim-btn" id="go-to-page3-btn">Track Secret Surprise Gift 🎁 ➔</button>
+            </div>
+        </div>
+
+        <!-- PAGE 3: Secret Gift Delivery Tracker -->
+        <div id="delivery-section" class="hidden">
+            <div class="badge gift-badge">🎁 MYSTERY GIFT UNLOCKED</div>
+            <h2>Parcel Dispatched! 🚚💨</h2>
+            <p class="delivery-sub">Tera secret physical gift raste me hai, guess karo kya ho sakta hai! 😉</p>
+
+            <!-- Mystery Box Preview -->
+            <div class="ring-card">
+                <div class="ring-icon">📦</div>
+                <div class="ring-details">
+                    <h3 id="ring-title">Top Secret Friendship Gift</h3>
+                    <p>Edition: <strong style="color: #ff6b6b;">VIP Unboxing 🔒</strong></p>
+                    <span class="status-pill">Status: In Transit ✈️</span>
+                </div>
+            </div>
+
+            <!-- Animated Delivery Timeline -->
+            <div class="tracking-timeline">
+                <div class="step completed">
+                    <div class="step-icon">✔</div>
+                    <div class="step-text">
+                        <strong>Secret Gift Packed</strong>
+                        <small>Handpicked & packed with love</small>
+                    </div>
+                </div>
+                <div class="step completed">
+                    <div class="step-icon">🚚</div>
+                    <div class="step-text">
+                        <strong>Out for Delivery</strong>
+                        <small>Dispatched to your home address</small>
+                    </div>
+                </div>
+                <div class="step active pulse">
+                    <div class="step-icon">📍</div>
+                    <div class="step-text">
+                        <strong>Reaching You Soon</strong>
+                        <small>Keep your doors open! 🎁</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tracking-id-box">
+                <small>MYSTERY TRACKING ID:</small>
+                <strong id="tracking-code">BFF-SECRET-X99</strong>
+            </div>
+
+            <!-- Action Buttons for Page 3 -->
+            <div class="button-group" style="margin-top: 20px;">
+                <a id="whatsapp-share" href="#" target="_blank" class="btn share-btn">Confirm Address on WhatsApp 💬</a>
+                <button class="sub-btn" id="back-to-page2-btn" style="margin-top: 10px;">⬅️ Back to Memories</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

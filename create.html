@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create a Friendship Day Surprise 🎁</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.card.wide{width:560px;text-align:left}
+.top{text-align:center;margin-bottom:6px}
+label{display:block;margin:16px 0 5px;font-weight:600;font-size:.85rem;color:#2d3436}
+label small{font-weight:400;color:#636e72}
+.card.wide input[type=text],textarea{width:100%;margin:0;padding:11px 16px;text-align:left;border:2px solid #ff9a9e;border-radius:18px;font:inherit;font-size:.92rem;outline:none;background:rgba(255,255,255,.9)}
+.card.wide input[type=text]:focus,textarea:focus{border-color:#ff6b6b}
+textarea{resize:vertical;min-height:72px}
+input[type=file]{font-size:.85rem;max-width:100%}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.check{display:flex;gap:10px;align-items:center;margin-top:18px;font-weight:600;font-size:.85rem}
+#go{margin-top:22px}
+#err{margin-top:12px;text-align:center}
+#out{margin-top:22px;padding-top:18px;border-top:2px dashed #ff9a9e}
+#out .btn,#out a.btn{margin-top:10px;text-align:center}
+@media(max-width:480px){.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="card wide">
+  <div class="top">
+    <div class="badge">✨ CREATE YOUR SURPRISE</div>
+    <h2>Make a Friendship Day page 🎁</h2>
+    <p>Fill this in, get a link, send it to your friend.</p>
+  </div>
+
+  <div class="row">
+    <div><label for="n">Friend's name</label><input type="text" id="n" maxlength="60" placeholder="e.g. Rohan"></div>
+    <div><label for="k">Secret nickname <small>(they type this to open it)</small></label><input type="text" id="k" maxlength="40" placeholder="e.g. chotu" autocomplete="off"></div>
+  </div>
+
+  <label for="m">Your message</label>
+  <textarea id="m" maxlength="600" placeholder="Write something only you would say to them..."></textarea>
+
+  <div class="row">
+    <div><label for="file">Photo <small>(small copy is saved inside the link)</small></label><input type="file" id="file" accept="image/*"></div>
+    <div><label for="p">Or photo link <small>(https, better quality)</small></label><input type="text" id="p" placeholder="https://..."></div>
+  </div>
+  <label for="cap">Photo caption</label>
+  <input type="text" id="cap" maxlength="40" value="Best Friends Forever ❤️">
+
+  <label>3 secret notes <small>(shown when they tap the gift boxes)</small></label>
+  <input type="text" id="b0" maxlength="160" value="Secret Memory 🤫: Yaad hai wo din? Kabhi nahi bhulunga!" style="margin-bottom:8px">
+  <input type="text" id="b1" maxlength="160" value="Best Quality ⭐: Humesha har problem me sath khada rehna!" style="margin-bottom:8px">
+  <input type="text" id="b2" maxlength="160" value="Official Tag 🏷️: Certified Lifetime Partner-in-Crime!">
+
+  <label for="q">Quotes <small>(one per line, up to 10)</small></label>
+  <textarea id="q" style="min-height:110px">"Friends standard nahi, har mushkil me stand lene wale hone chahiye!" 😎
+"Tu dost nahi, mera official crime partner hai!" 🕵️‍♂️
+"Zindagi me acche dosto ka hona utna hi zaroori hai jitna fast internet!" 📶</textarea>
+
+  <div class="row">
+    <div><label for="s">Your name</label><input type="text" id="s" maxlength="40" placeholder="e.g. Ekakshar"></div>
+    <div><label for="w">Your WhatsApp number <small>(optional, with country code)</small></label><input type="text" id="w" inputmode="numeric" placeholder="919876543210"></div>
+  </div>
+
+  <label for="a">Song link <small>(optional, direct https .mp3 link; blank = the site's default song)</small></label>
+  <input type="text" id="a" placeholder="https://.../song.mp3">
+
+  <label class="check"><input type="checkbox" id="t" checked> Include the "gift on the way" tracker page</label>
+  <label for="g" style="margin-top:12px">Gift name <small>(shown on the tracker page)</small></label>
+  <input type="text" id="g" maxlength="60" value="Top Secret Friendship Gift 🎁">
+
+  <button class="btn" id="go">Create my link 🔗</button>
+  <p id="err" class="error-text hidden"></p>
+
+  <div id="out" class="hidden">
+    <label for="link">Your link</label>
+    <input type="text" id="link" readonly>
+    <p id="note" style="margin-top:8px;font-size:.8rem"></p>
+    <button class="btn replay-btn" id="copy">Copy link 📋</button>
+    <a class="btn share-btn" id="wa" target="_blank" rel="noopener">Send on WhatsApp 💬</a>
+    <a class="sub-btn" id="prev" target="_blank" rel="noopener" style="display:block;margin-top:14px;text-align:center">Preview it first 👀</a>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const clean = (v, n) => v.trim().slice(0, n);
+const b64e = s => { let b = ''; new TextEncoder().encode(s).forEach(c => b += String.fromCharCode(c)); return btoa(b).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); };
+const fail = t => { $('err').textContent = '❌ ' + t; $('err').classList.remove('hidden'); };
+
+function shrink(file) {
+  return new Promise((ok, no) => {
+    const im = new Image(), u = URL.createObjectURL(file);
+    im.onload = () => {
+      const r = Math.min(1, 200 / Math.max(im.width, im.height)), c = document.createElement('canvas');
+      c.width = Math.round(im.width * r); c.height = Math.round(im.height * r);
+      c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(u); ok(c.toDataURL('image/jpeg', 0.6));
+    };
+    im.onerror = no; im.src = u;
+  });
+}
+
+$('go').onclick = async () => {
+  $('err').classList.add('hidden');
+  const n = clean($('n').value, 60), k = clean($('k').value, 40).toLowerCase();
+  if (!n || !k) return fail("Please fill your friend's name and the secret nickname.");
+  const d = { n, k, m: clean($('m').value, 600), cap: clean($('cap').value, 40), g: clean($('g').value, 60), s: clean($('s').value, 40),
+    b: [0, 1, 2].map(i => clean($('b' + i).value, 160)),
+    q: $('q').value.split('\n').map(x => clean(x, 160)).filter(Boolean).slice(0, 10), t: $('t').checked ? 1 : 0 };
+  const w = $('w').value.replace(/\D/g, ''); if (/^\d{8,15}$/.test(w)) d.w = w;
+  const a = clean($('a').value, 300); if (/^https:\/\//.test(a)) d.a = a;
+  const p = clean($('p').value, 500), f = $('file').files[0];
+  try { if (/^https:\/\//.test(p)) d.p = p; else if (f) d.p = await shrink(f); }
+  catch (e) { return fail('Could not read that photo. Try another one or paste a photo link.'); }
+
+  const url = new URL('index.html', location.href); url.hash = 'd=' + b64e(JSON.stringify(d));
+  const link = url.href;
+  $('link').value = link;
+  $('wa').href = 'https://wa.me/?text=' + encodeURIComponent('I made a Friendship Day surprise for you 🎁 Open it and type our secret nickname: ' + link);
+  $('prev').href = link;
+  $('note').textContent = location.protocol === 'file:' ? '⚠️ This site is not online yet. Put it on a host (like GitHub Pages) first, otherwise this link only works on your computer.'
+    : link.length > 6000 ? '⚠️ The link is long because of the photo. If WhatsApp cuts it, use a photo link instead of uploading.'
+    : 'Anyone with this link can read what you wrote. The nickname is just for fun, not a lock.';
+  $('out').classList.remove('hidden'); $('out').scrollIntoView({ behavior: 'smooth' });
+};
+
+$('copy').onclick = async () => {
+  try { await navigator.clipboard.writeText($('link').value); } catch (e) { $('link').select(); document.execCommand('copy'); }
+  $('copy').textContent = 'Copied ✅'; setTimeout(() => $('copy').textContent = 'Copy link 📋', 1800);
+};
+</script>
+</body>
+</html>
